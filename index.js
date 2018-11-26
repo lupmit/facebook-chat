@@ -1,12 +1,15 @@
-﻿
+﻿//lupmit
+//26/11/2018
 
+// các thư viện cần cài đặt trước khi chạy
 // npm install request				
 // npm install facebook-chat-api	
 
 var request = require("request");
 var login = require("facebook-chat-api");
-var mess = new Array("bạn nói cái gì v ạ?","ý bạn là gì","nhắn cái gì có ý nghĩa cái coi ><","đừng spam nuwaxx má ơi-.-")
 const fs = require("fs");
+
+var mess = new Array("bạn nói cái gì v ạ?","ý bạn là gì","nhắn cái gì có ý nghĩa cái coi ><","đừng spam nuwaxx má ơi-.-")
 var botkey = "http://ghuntur.com/simsim.php?lc=vn&deviceId=&bad=0&txt=";
 
 login(
@@ -17,9 +20,6 @@ login(
 function callback (err, api)
 {
 	if(err) return console.error(err);
-	api.setOptions({
-			foreLogin: true
-		});
 	api.setOptions({forceLogin: true, selfListen: false, logLevel: "silent"});
 	
 	api.listen(function callback(err, message)

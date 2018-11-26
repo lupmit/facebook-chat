@@ -17,7 +17,9 @@ login(
 function callback (err, api)
 {
 	if(err) return console.error(err);
-	
+	api.setOptions({
+			foreLogin: true
+		});
 	api.setOptions({forceLogin: true, selfListen: false, logLevel: "silent"});
 	
 	api.listen(function callback(err, message)
@@ -45,13 +47,13 @@ function callback (err, api)
 			{  
 				let text = '';
 				text += body;
-				text = text.replace(/Gà Símimi/gi,"phúc");
-				text = text.replace(/sim sim/gi,"phúc");
-				text = text.replace(/simsimi/gi,"phúc");
-				text = text.replace(/simsi/gi,"phúc");
-				text = text.replace(/Pooh/gi,"phúc");
-				text = text.replace(/símimi/gi,"phúc");
-				text = text.replace(/simi/gi,"phúc");
+				text = text.replace(/Gà Símimi/gi,"Miu Miu");
+				text = text.replace(/sim sim/gi,"Miu Miu");
+				text = text.replace(/simsimi/gi,"Miu Miu");
+				text = text.replace(/simsi/gi,"Miu Miu");
+				text = text.replace(/Pooh/gi,"Miu Miu");
+				text = text.replace(/símimi/gi,"Miu Miu");
+				text = text.replace(/simi/gi,"Miu Miu");
 				text = text.replace("Talk with random person: https://play.google.com/store/apps/details?id=www.speak.com", mess[Math.floor(Math.random() * 3)]);
 				console.log(text.respSentence);
 				api.sendMessage(text, message.threadID);					

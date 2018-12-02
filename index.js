@@ -9,6 +9,26 @@ var request = require("request");
 var login = require("facebook-chat-api");
 const fs = require("fs");
 
+var http = require('http');
+http.createServer(function(req, res) {
+  console.log("ping");
+  res.writeHead(200, {
+    'Content-Type': 'text/plain'
+  });
+  res.end("");
+}).listen(process.env.PORT || 5000);
+
+setInterval(function() {
+  http.get("http://dungshin.herokuapp.com", function(res) {
+    console.log("pong");
+  });
+}, 1800000 * Math.random() + 1200000);
+
+function write (url)
+{
+	request(url).pipe(fs.createWriteStream(__dirname + '/song.mp3'));
+}
+
 var mess = new Array("bạn nói cái gì v ạ?","ý bạn là gì","nhắn cái gì có ý nghĩa cái coi ><","đừng spam nuwaxx má ơi-.-")
 var botkey = "http://ghuntur.com/simsim.php?lc=vn&deviceId=&bad=0&txt=";
 
@@ -35,6 +55,29 @@ function callback (err, api)
 			api.sendMessage(message.senderID, message.threadID); 
 			api.markAsRead(message.threadID); 
 			console.log("Sender ID: " + message.senderID);
+			return;
+		}
+		else if (message.body.search("sing")!= -1||message.body.search("Sing")!= -1) {
+			var key = message.body.slice(5);
+			request('https://phucmit.000webhostapp.com/api/getinfo.php?key='+encodeURI(key),
+			function(error, response, body)
+			{
+				var obj = JSON.parse(body);
+				if(obj.link === null)
+				{
+					api.sendMessage("Xin loi, k tim thay bai hat nay!",message.threadID);
+					return;
+				}
+				write(obj.link);
+				setTimeout(function() {
+					var msg = {
+						attachment: fs.createReadStream(__dirname + '/song.mp3')
+					}
+					api.sendMessage("dù như thế nào thì e vẫn ở bên anh, chúc anh nghe nhạc vui vẻ!",message.threadID);
+					api.sendMessage(msg,message.threadID);
+				}, 2000);
+			});
+			return;
 		}
 		else if (message.body.indexOf("stop")===0){
 			console.log("FormID: " + message.threadID + '->Message: '+message.body);
@@ -55,7 +98,7 @@ function callback (err, api)
 				text = text.replace(/símimi/gi,"Miu Miu");
 				text = text.replace(/simi/gi,"Miu Miu");
 				text = text.replace("Talk with random person: https://play.google.com/store/apps/details?id=www.speak.com", mess[Math.floor(Math.random() * 3)]);
-				console.log(text.respSentence);
+				console.log(text);
 				api.sendMessage(text, message.threadID);					
 			});
 		}

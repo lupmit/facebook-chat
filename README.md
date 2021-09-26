@@ -1,15 +1,11 @@
 # facebook-chat
-Code bừa :v
+## Config
+Config your account in login.js file
+## How to run?
+1. `pm install`
+2. `node login.js` get cookies
+3. `node index.js`
+## Important
+It may cause your account to be checkpoint
 
-tải project về ném lên vps hỗ trợ nodejs
-
-install các module cần thiết bằng cmd
-
-1. npm install request
-2. npm install facebook-api-chat
-
-thêm email và pass vào file login.js
-chạy file login trước để tạo cookie đăng nhập
-rồi chạy file index.js
-
-project viết dựa trên nguồn: https://github.com/Schmavery/facebook-chat-api
+API(https://github.com/Schmavery/facebook-chat-api)
